@@ -1,0 +1,12 @@
+movies <- read.csv(file.choose())
+head(movies)
+colnames(movies) <- c("Film", "Genre", "CriticRating", 
+                      "AudienceRating", "BudgetMillions", "Year")
+head(movies)
+tail(movies)
+str(movies)
+summary(movies)
+movies$Film <- factor(movies$Film)
+movies$Genre <- factor(movies$Genre)
+movies$Year <- factor(movies$Year)
+str(movies)

@@ -1,0 +1,108 @@
+movies <- read.csv(file.choose())
+head(movies)
+colnames(movies) <- c("Film", "Genre", "CriticRating", 
+                      "AudienceRating", "BudgetMillions", "Year")
+head(movies)
+tail(movies)
+str(movies)
+summary(movies)
+movies$Film <- factor(movies$Film)
+movies$Genre <- factor(movies$Genre)
+movies$Year <- factor(movies$Year)
+str(movies)
+
+library(ggplot2)
+
+ggplot(data=movies, aes(x=CriticRating, y=AudienceRating))
+
+# add geometry
+ggplot(data=movies, aes(x=CriticRating, y=AudienceRating)) + 
+  geom_point()
+
+# add color
+ggplot(data=movies, aes(x=CriticRating, 
+                        y=AudienceRating,
+                        color=Genre)) + 
+  geom_point()
+
+# add size
+ggplot(data=movies, aes(x=CriticRating, 
+                        y=AudienceRating,
+                        color=Genre,
+                        size=Genre)) + 
+  geom_point()
+
+# add size + better way
+ggplot(data=movies, aes(x=CriticRating, 
+                        y=AudienceRating,
+                        color=Genre,
+                        size=BudgetMillions)) + 
+  geom_point()
+
+p <- ggplot(data=movies, aes(x=CriticRating, 
+                             y=AudienceRating,
+                             color=Genre,
+                             size=BudgetMillions)) 
+
+# points
+p + geom_point()
+
+# lines
+p + geom_line()
+
+# multiple layers
+p + geom_point() + geom_line()
+p + geom_line() + geom_point() 
+
+q <- ggplot(data=movies, aes(x=CriticRating, 
+                             y=AudienceRating,
+                             color=Genre,
+                             size=BudgetMillions))
+
+# add geom layer
+q + geom_point()
+
+# overriding aes
+# ex1
+q + geom_point(aes(size=CriticRating))
+
+# ex2
+q + geom_point(aes(color=BudgetMillions))
+
+# q remains the same
+q + geom_point()
+
+# ex3
+q + geom_point(aes(x=BudgetMillions)) +
+  xlab("Budget Millions $$$")
+
+# ex4
+q + geom_line() + geom_point() 
+# reduce line size
+q + geom_line(size=1) + geom_point()
+
+
+# Mapping VS Setting
+
+r <- ggplot(data=movies, 
+            aes(x=CriticRating, y=AudienceRating))
+r + geom_point()
+
+# Add color
+# 1. Mapping (what we've done so far)
+r + geom_point(aes(color=Genre))
+
+# 2. Setting
+r + geom_point(color="DarkGreen")
+
+# ERROR
+#r + geom_point(aes(color="DarkGreen"))
+
+# 1. Mapping
+r + geom_point(aes(size=BudgetMillions))
+
+# 2. Setting
+r + geom_point(size=10)
+
+# ERROR
+#r + geom_point(aes(size=10))
